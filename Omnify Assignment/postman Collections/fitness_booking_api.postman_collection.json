@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "9cb544c1-4f43-4262-9268-041029040bae",
+		"name": "fitness_booking_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33889715"
+	},
+	"item": [
+		{
+			"name": "Get Classes",
+			"request": {
+				"auth": {
+					"type": "inherit"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/classes?tz=Asia/Kolkata",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"classes"
+					],
+					"query": [
+						{
+							"key": "tz",
+							"value": "Asia/Kolkata"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking Classes",
+			"request": {
+				"auth": {
+					"type": "inherit"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"class_id\": 1, \r\n  \"client_name\": \"santhosh\", \r\n  \"client_email\": \"santhosh@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/book",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"book"
+					],
+					"query": [
+						{
+							"key": "tz",
+							"value": "Asia/Kolkata",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking Lists",
+			"request": {
+				"auth": {
+					"type": "inherit"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/bookings?email=santhosh@test.com",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"bookings"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "santhosh@test.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
