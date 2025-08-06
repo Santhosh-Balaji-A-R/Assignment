@@ -1,0 +1,231 @@
+# Fitness Class Booking API
+
+A simple REST API for a fictional fitness studio that allows users to:
+- View available fitness classes
+- Book a class
+- View bookings made by email
+
+Built using **Python + Flask**, and stores data in local JSON files (`classes.json`, `bookings.json`).
+
+---
+
+##  Project Structure
+
+fitness_booking_api/
+├── app.py              # Main Flask application
+├── data_store.py       # Handles JSON data operations
+├── utils.py            # Timezone conversion and input validation
+├── test_app.py         # Test cases using pytest
+├── classes.json        # Auto-generated class data
+├── bookings.json       # Auto-generated booking data
+├── requirements.txt    # Project dependencies
+├── README.md           # Project documentation
+└── postman/
+    └── fitness_booking_api.postman_collection.json
+
+
+---
+
+## Setup Instructions
+
+### Prerequisites
+
+- Python 3.8 or higher
+- `pip` (Python package manager)
+
+---
+---
+
+##  Requirements Summary
+
+- Python 3.8+
+- Flask                  # Web framework used to build the API
+- Pytest                 # Test runner used in test_app.py
+- Pytz                   # Timezone conversion utility (used in utils.py)
+
+---
+
+### Install Dependencies
+
+#### Option 1: Using `requirements.txt`
+pip install -r requirements.txt
+
+#### Option 2: Manually install packages
+pip install flask pytest pytz
+
+---
+
+### Run the API Server
+
+python app.py
+
+The API will start at:
+http://127.0.0.1:5000
+
+---
+
+## Running Tests
+
+This project uses **pytest** for testing.
+
+pytest test_app.py
+
+Expected output:
+8 passed in 0.80s
+
+If you see any `DeprecationWarning`, it's safe (we use timezone-aware datetime in newer versions).
+
+---
+
+## API Endpoints
+
+### * GET /classes
+
+Returns a list of all upcoming fitness classes.
+
+Query Parameter:
+- tz (optional): Target timezone (e.g. UTC, Asia/Kolkata, Europe/London)
+
+Example:
+GET /classes?tz=Asia/Kolkata
+
+Response:
+[
+  {
+    "available_slots": 5,
+    "datetime": "2025-08-06 07:00:00",
+    "id": 1,
+    "instructor": "Aarti",
+    "name": "Yoga"
+  },
+  {
+    "available_slots": 10,
+    "datetime": "2025-08-06 08:00:00",
+    "id": 2,
+    "instructor": "Raj",
+    "name": "Zumba"
+  },
+  {
+    "available_slots": 8,
+    "datetime": "2025-08-06 09:00:00",
+    "id": 3,
+    "instructor": "Sameer",
+    "name": "HIIT"
+  }
+]
+
+---
+
+### * POST /book
+
+Books a spot in a fitness class.
+
+Request Body:
+{
+  "class_id": 1, 
+  "client_name": "santhosh", 
+  "client_email": "santhosh@test.com"
+}
+
+Successful Response:
+{
+  "booking": {
+    "class_id": 1,
+    "client_email": "santhosh@test.com",
+    "client_name": "santhosh",
+    "datetime": "2025-08-05T02:29:24.557937+00:00",
+    "id": 1
+  },
+  "message": "Booking successful"
+}
+
+Error Cases:
+- Missing fields (400)
+- No available slots (400)
+- Invalid class ID (400)
+
+---
+
+### * GET /bookings?email=<client_email>
+
+Returns all bookings made by a specific email.
+
+Example:
+GET /bookings?email=santhosh@test.com
+
+Response:
+[
+  {
+    "class_name": "Yoga",
+    "client_name": "santhosh",
+    "datetime": "2025-08-05T02:29:24.557937+00:00"
+  }
+]
+
+Error Case:
+- Missing email query param (400)
+
+---
+
+## Postman Collection
+
+To test the API quickly, import the Postman collection located at root directory:
+
+`fitness_booking_api.postman_collection.json`
+
+This collection includes all endpoints:
+
+- GET /classes
+- POST /book
+- GET /bookings
+
+Open the collection in Postman, update the base URL if needed, and start testing!
+
+
+##  Notes
+
+- Classes are stored in IST (Asia/Kolkata) and converted at request time.
+- Booking timestamps are stored in UTC.
+- Data is stored in classes.json and bookings.json.
+- If classes.json is empty or missing, default classes are seeded automatically.
+
+
+
+## Future Enhancements
+
+-  **User Authentication**
+  - Allow users to register and log in
+  - Protect booking routes using tokens (e.g., JWT)
+
+-  **Class Management Panel**
+  - Admin interface (web or CLI) to add/edit/remove classes
+  - Track class attendance and booking limits
+
+-  **Database Integration**
+  - Replace JSON files with MySQL or Oracle or SQLite or PostgreSQL
+  - Use SQLAlchemy or Mysql-connector or pyMysql or others
+
+-  **Docker Support**
+  - Containerize the app for easy deployment
+
+-  **Cloud Deployment**
+  - Deploy to platforms like:
+    - Azure
+    - AWS
+    - Linux Apache2
+
+-  **Analytics**
+  - Show booking trends, most popular classes.
+
+-  **Frontend Integration**
+  - Connect the API to a simple frontend.
+
+-  **Recurring Classes**
+  - Support weekly/monthly recurring class schedules.
+
+
+
+##  Author
+
+Santhosh Balaji  
+Feel free to contribute, suggest features, or fork for your own use!
